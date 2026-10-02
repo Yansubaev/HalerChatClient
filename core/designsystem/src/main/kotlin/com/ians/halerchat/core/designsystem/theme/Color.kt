@@ -1,4 +1,4 @@
-package com.ians.halerchat.ui.theme
+package com.ians.halerchat.core.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 

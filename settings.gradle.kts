@@ -24,4 +24,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "Haler Chat"
 include(":app")
- 
+include(":core:model")
+include(":core:data")
+include(":core:network")
+include(":core:designsystem")
+include(":feature:auth")

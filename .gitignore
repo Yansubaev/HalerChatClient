@@ -8,8 +8,17 @@
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 .DS_Store
-/build
+**/build/
 /captures
 .externalNativeBuild
 .cxx
 local.properties
+/.idea/deploymentTargetSelector.xml
+/.idea/misc.xml
+/.idea/deviceManager.xml
+
+# описание спецификаций backend, симлинк в проекте
+/HALERCHAT_CLIENT_SPEC.md
+
+# служебные данные Kotlin Gradle plugin (маркеры сессий, отчёты об ошибках)
+.kotlin/
