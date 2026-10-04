@@ -25,6 +25,11 @@ dependencies {
 
     implementation(libs.androidx.datastore.preferences)
 
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.android)
+
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(platform(libs.ktor.bom))
+    testImplementation(libs.ktor.client.mock)
 }

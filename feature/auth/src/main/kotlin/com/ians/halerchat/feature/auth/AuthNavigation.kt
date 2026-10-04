@@ -8,5 +8,5 @@ import kotlinx.serialization.Serializable
 data object LoginKey : NavKey
 
 fun EntryProviderScope<NavKey>.authEntries(onLoggedIn: () -> Unit) {
-    entry<LoginKey> { LoginScreen(onLoggedIn = onLoggedIn) }
+    entry<LoginKey> { LoginRoute(onLoggedIn = onLoggedIn) }
 }

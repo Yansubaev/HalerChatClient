@@ -23,6 +23,14 @@ android {
 
 dependencies {
     implementation(project(":core:designsystem"))
+    implementation(project(":core:data"))
+
+    implementation(platform(libs.koin.bom))
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.navigation3.runtime)
     implementation(libs.kotlinx.serialization.json)
+    debugImplementation(libs.androidx.ui.tooling)
 }
