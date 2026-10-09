@@ -1,8 +1,8 @@
-package com.ians.halerchat.feature.auth
+package com.ians.halerchat.feature.auth.login
 
 import com.ians.halerchat.core.data.auth.AuthResult
 
-data class LoginState(
+internal data class LoginState(
     val email: String = "",
     val password: String = "",
     val isLoading: Boolean = false,
@@ -13,7 +13,7 @@ data class LoginState(
         get() = email.isNotBlank() && password.isNotBlank() && !isLoading
 }
 
-sealed interface LoginIntent {
+internal sealed interface LoginIntent {
     data class EmailChanged(val value: String) : LoginIntent
     data class PasswordChanged(val value: String) : LoginIntent
     data object Submit : LoginIntent

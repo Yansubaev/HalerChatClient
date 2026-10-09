@@ -1,0 +1,14 @@
+<resources>
+    <string name="auth_email_label">Эл. почта</string>
+    <string name="auth_email_placeholder">Введите email</string>
+    <string name="auth_password_label">Пароль</string>
+    <string name="auth_password_placeholder">Введите пароль</string>
+    <string name="auth_login_button">Войти</string>
+
+    <string name="auth_error_email_taken">Этот email уже зарегистрирован</string>
+    <string name="auth_error_invalid_credentials">Неверный email или пароль</string>
+    <string name="auth_error_network">Проверьте подключение к интернету</string>
+    <string name="auth_error_rate_limited">Слишком много попыток. Попробуйте позже</string>
+    <string name="auth_error_unknown">Произошла непредвиденная ошибка</string>
+    <string name="auth_error_validation">Проверьте введённые данные</string>
+</resources>

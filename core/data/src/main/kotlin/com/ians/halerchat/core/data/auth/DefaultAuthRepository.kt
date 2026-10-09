@@ -6,7 +6,7 @@ import com.ians.halerchat.core.network.auth.AuthApi
 import com.ians.halerchat.core.network.auth.AuthResultDto
 import java.io.IOException
 
-internal class DefaultAuthRepository internal constructor(
+internal class DefaultAuthRepository(
     private val api: AuthApi,
     private val sessionStore: SessionStore,
 ) : AuthRepository {

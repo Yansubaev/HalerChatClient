@@ -1,4 +1,4 @@
-package com.ians.halerchat.feature.auth
+package com.ians.halerchat.feature.auth.login
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,12 +17,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ians.halerchat.core.data.auth.AuthResult
+import com.ians.halerchat.feature.auth.R
+import com.ians.halerchat.feature.auth.toErrorText
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -49,10 +51,10 @@ internal fun LoginScreen(state: LoginState, onIntent: (LoginIntent) -> Unit) {
                 value = state.email,
                 onValueChange = { onIntent(LoginIntent.EmailChanged(it)) },
                 label = {
-                    Text("Email")
+                    Text(stringResource(R.string.auth_email_label))
                 },
                 placeholder = {
-                    Text("Enter your email")
+                    Text(stringResource(R.string.auth_email_placeholder))
                 },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
@@ -62,10 +64,10 @@ internal fun LoginScreen(state: LoginState, onIntent: (LoginIntent) -> Unit) {
                 value = state.password,
                 onValueChange = { onIntent(LoginIntent.PasswordChanged(it)) },
                 label = {
-                    Text("Password")
+                    Text(stringResource(R.string.auth_password_label))
                 },
                 placeholder = {
-                    Text("Enter your password")
+                    Text(stringResource(R.string.auth_password_placeholder))
                 },
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
@@ -74,15 +76,7 @@ internal fun LoginScreen(state: LoginState, onIntent: (LoginIntent) -> Unit) {
             Spacer(Modifier.height(16.dp))
 
             state.error?.let { error ->
-                val errorText = when (error) {
-                    AuthResult.EmailTaken -> "Email is already taken"
-                    AuthResult.InvalidCredentials -> "Wrong email or password"
-                    AuthResult.Network -> "Check your internet connection"
-                    AuthResult.RateLimited -> "Hold on, the server is busy"
-                    AuthResult.Unknown -> "An unexpected error occurred"
-                    is AuthResult.Validation -> error.message ?: "Invalid input"
-                }
-                Text(errorText, color = MaterialTheme.colorScheme.error)
+                Text(error.toErrorText(), color = MaterialTheme.colorScheme.error)
                 Spacer(Modifier.height(16.dp))
             }
 
@@ -93,7 +87,7 @@ internal fun LoginScreen(state: LoginState, onIntent: (LoginIntent) -> Unit) {
                 if (state.isLoading) {
                     CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
                 } else {
-                    Text("Login")
+                    Text(stringResource(R.string.auth_login_button))
                 }
             }
         }

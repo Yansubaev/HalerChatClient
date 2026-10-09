@@ -3,13 +3,13 @@ package com.ians.halerchat.core.network.auth
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LoginRequest(
+internal data class LoginRequest(
     val email: String,
     val password: String
 )
 
 @Serializable
-data class RegisterRequest(
+internal data class RegisterRequest(
     val email: String,
     val password: String,
     val displayName: String
