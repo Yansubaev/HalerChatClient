@@ -1,8 +1,9 @@
-package com.ians.halerchat.feature.auth.login
+package com.ians.halerchat.feature.auth.register
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -36,28 +37,28 @@ import com.ians.halerchat.feature.auth.toErrorText
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-internal fun LoginRoute(
+internal fun RegisterRoute(
     onLoggedIn: () -> Unit,
-    onRegisterClick: () -> Unit,
-    viewModel: LoginViewModel = koinViewModel()
+    onLoginClick: () -> Unit,
+    viewModel: RegisterViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.isLoggedIn) {
         if (state.isLoggedIn) onLoggedIn()
     }
 
-    LoginScreen(
+    RegisterScreen(
         state = state,
         onIntent = viewModel::onIntent,
-        onRegisterClick = onRegisterClick
+        onLoginClick = onLoginClick
     )
 }
 
 @Composable
-internal fun LoginScreen(
-    state: LoginState,
-    onIntent: (LoginIntent) -> Unit,
-    onRegisterClick: () -> Unit
+internal fun RegisterScreen(
+    state: RegisterState,
+    onIntent: (RegisterIntent) -> Unit,
+    onLoginClick: () -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
@@ -65,9 +66,26 @@ internal fun LoginScreen(
         Column {
             TextField(
                 modifier = Modifier
-                    .semantics { contentType = ContentType.EmailAddress },
+                    .semantics { contentType = ContentType.PersonFullName },
+                value = state.displayName,
+                onValueChange = { onIntent(RegisterIntent.NameChanged(it)) },
+                label = {
+                    Text(stringResource(R.string.auth_name_label))
+                },
+                placeholder = {
+                    Text(stringResource(R.string.auth_name_placeholder))
+                },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.PersonName,
+                    imeAction = ImeAction.Next
+                ),
+            )
+            Spacer(Modifier.height(16.dp))
+            TextField(
+                modifier = Modifier.semantics { contentType = ContentType.EmailAddress },
                 value = state.email,
-                onValueChange = { onIntent(LoginIntent.EmailChanged(it)) },
+                onValueChange = { onIntent(RegisterIntent.EmailChanged(it)) },
                 label = {
                     Text(stringResource(R.string.auth_email_label))
                 },
@@ -82,10 +100,9 @@ internal fun LoginScreen(
             )
             Spacer(Modifier.height(16.dp))
             TextField(
-                modifier = Modifier
-                    .semantics { contentType = ContentType.Password },
+                modifier = Modifier.semantics { contentType = ContentType.NewPassword },
                 value = state.password,
-                onValueChange = { onIntent(LoginIntent.PasswordChanged(it)) },
+                onValueChange = { onIntent(RegisterIntent.PasswordChanged(it)) },
                 label = {
                     Text(stringResource(R.string.auth_password_label))
                 },
@@ -99,7 +116,7 @@ internal fun LoginScreen(
                     imeAction = ImeAction.Done
                 ),
                 keyboardActions = KeyboardActions(onDone = {
-                    onIntent(LoginIntent.Submit)
+                    onIntent(RegisterIntent.Submit)
                 })
             )
             Spacer(Modifier.height(16.dp))
@@ -110,37 +127,45 @@ internal fun LoginScreen(
             }
 
             Button(
-                onClick = { onIntent(LoginIntent.Submit) },
+                onClick = { onIntent(RegisterIntent.Submit) },
                 enabled = state.canSubmit,
             ) {
                 if (state.isLoading) {
                     CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
                 } else {
+                    Text(stringResource(R.string.auth_register_button))
+                }
+            }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(stringResource(R.string.auth_have_account))
+                TextButton(
+                    onClick = onLoginClick,
+                    contentPadding = PaddingValues(0.dp)
+                ) {
                     Text(stringResource(R.string.auth_login_button))
                 }
             }
 
-            TextButton(
-                onClick = onRegisterClick,
-                contentPadding = PaddingValues(0.dp)
-            ) {
-                Text(stringResource(R.string.auth_create_account))
-            }
         }
     }
 }
 
-@Preview
+
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-private fun LoginScreenPreview() {
+private fun RegisterScreenPreview() {
     HalerChatTheme {
-        LoginScreen(
-            state = LoginState(
+        RegisterScreen(
+            state = RegisterState(
+                displayName = "Alice",
                 email = "email@post.com",
                 password = "password",
             ),
             onIntent = {},
-            onRegisterClick = {}
+            onLoginClick = {}
         )
     }
 }

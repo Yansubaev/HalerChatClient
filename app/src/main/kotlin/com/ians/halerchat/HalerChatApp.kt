@@ -8,6 +8,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.ians.halerchat.feature.auth.LoginKey
+import com.ians.halerchat.feature.auth.RegisterKey
 import com.ians.halerchat.feature.auth.authEntries
 
 @Composable
@@ -26,6 +27,12 @@ fun HalerChatApp() {
                 onLoggedIn = {
                     backStack.clear()
                     backStack.add(HomeKey)
+                },
+                onRegisterClick = {
+                    backStack.add(RegisterKey)
+                },
+                onLoginClick = {
+                    backStack.removeLastOrNull()
                 }
             )
             entry<HomeKey> { Text("Home") }

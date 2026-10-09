@@ -1,9 +1,14 @@
 <resources>
+    <string name="auth_name_label">Name</string>
+    <string name="auth_name_placeholder">Enter your name</string>
     <string name="auth_email_label">Email</string>
     <string name="auth_email_placeholder">Enter your email</string>
     <string name="auth_password_label">Password</string>
     <string name="auth_password_placeholder">Enter your password</string>
     <string name="auth_login_button">Log in</string>
+    <string name="auth_register_button">Register</string>
+    <string name="auth_create_account">Create an account</string>
+    <string name="auth_have_account">Already have an account?</string>
 
     <string name="auth_error_email_taken">Email is already taken</string>
     <string name="auth_error_invalid_credentials">Wrong email or password</string>
