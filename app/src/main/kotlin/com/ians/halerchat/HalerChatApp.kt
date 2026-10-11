@@ -12,10 +12,9 @@ import androidx.navigation3.ui.NavDisplay
 import com.ians.halerchat.feature.auth.LoginKey
 import com.ians.halerchat.feature.auth.RegisterKey
 import com.ians.halerchat.feature.auth.authEntries
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HalerChatApp(viewModel: MainViewModel = koinViewModel()) {
+fun HalerChatApp(viewModel: MainViewModel) {
     val isLoggedIn by viewModel.isLoggedIn.collectAsStateWithLifecycle()
     val loggedIn = isLoggedIn ?: return
     val backStack = rememberNavBackStack(if (loggedIn) HomeKey else LoginKey)
