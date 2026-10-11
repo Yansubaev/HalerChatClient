@@ -3,11 +3,15 @@ package com.ians.halerchat.feature.auth
 import com.ians.halerchat.core.data.auth.AuthRepository
 import com.ians.halerchat.core.data.auth.AuthResult
 import com.ians.halerchat.core.model.User
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 internal class FakeAuthRepository : AuthRepository {
     var result: AuthResult = AuthResult.Success(User(id = "1", email = "a@b.c", displayName = "Alice"))
     val loginCalls = mutableListOf<Pair<String, String>>()
     val registerCalls = mutableListOf<Triple<String, String, String>>()
+
+    override val isLoggedIn: Flow<Boolean> = flowOf(false)
 
     override suspend fun login(email: String, password: String): AuthResult {
         loginCalls += email to password

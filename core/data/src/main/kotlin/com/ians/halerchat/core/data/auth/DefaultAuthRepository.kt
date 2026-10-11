@@ -4,12 +4,16 @@ import com.ians.halerchat.core.data.session.SessionStore
 import com.ians.halerchat.core.network.ApiException
 import com.ians.halerchat.core.network.auth.AuthApi
 import com.ians.halerchat.core.network.auth.AuthResultDto
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.io.IOException
 
 internal class DefaultAuthRepository(
     private val api: AuthApi,
     private val sessionStore: SessionStore,
 ) : AuthRepository {
+    override val isLoggedIn: Flow<Boolean> = sessionStore.session.map { it != null }
+
     override suspend fun login(email: String, password: String): AuthResult =
         authenticate { api.login(email, password) }
 

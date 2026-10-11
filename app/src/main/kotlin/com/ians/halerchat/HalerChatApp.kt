@@ -2,6 +2,8 @@ package com.ians.halerchat
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
@@ -10,10 +12,13 @@ import androidx.navigation3.ui.NavDisplay
 import com.ians.halerchat.feature.auth.LoginKey
 import com.ians.halerchat.feature.auth.RegisterKey
 import com.ians.halerchat.feature.auth.authEntries
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HalerChatApp() {
-    val backStack = rememberNavBackStack(LoginKey)
+fun HalerChatApp(viewModel: MainViewModel = koinViewModel()) {
+    val isLoggedIn by viewModel.isLoggedIn.collectAsStateWithLifecycle()
+    val loggedIn = isLoggedIn ?: return
+    val backStack = rememberNavBackStack(if (loggedIn) HomeKey else LoginKey)
 
     NavDisplay(
         backStack = backStack,

@@ -14,7 +14,9 @@ import io.ktor.http.headersOf
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -47,6 +49,17 @@ class DefaultAuthRepositoryTest {
         api = AuthApi(createHttpClient(engine)),
         sessionStore = sessionStore,
     )
+
+    @Test
+    fun isLoggedIn_isFalseBeforeLogin_andTrueAfter() = runTest {
+        val repository = repository(respondingWith(HttpStatusCode.OK, authResultJson(isNewUser = false)))
+
+        assertFalse(repository.isLoggedIn.first())
+
+        repository.login(email = "a@b.c", password = "secret123")
+
+        assertTrue(repository.isLoggedIn.first())
+    }
 
     @Test
     fun login_success_returnsUserAndSavesSession() = runTest {
