@@ -5,6 +5,7 @@ import com.ians.halerchat.core.network.ApiException
 import com.ians.halerchat.core.network.auth.AuthApi
 import com.ians.halerchat.core.network.auth.AuthResultDto
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
@@ -23,6 +24,16 @@ internal class DefaultAuthRepository(
         displayName: String
     ): AuthResult =
         authenticate { api.register(email, password, displayName) }
+
+    override suspend fun logout() {
+        val session = sessionStore.session.first() ?: return
+        try {
+            api.logout(session.refreshToken)
+        } catch (e: ApiException) {
+        } catch (e: IOException) {
+        }
+        sessionStore.clear()
+    }
 
     private suspend fun authenticate(call: suspend () -> AuthResultDto): AuthResult =
         try {

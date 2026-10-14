@@ -7,7 +7,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 internal class FakeAuthRepository : AuthRepository {
-    var result: AuthResult = AuthResult.Success(User(id = "1", email = "a@b.c", displayName = "Alice"))
+    var result: AuthResult =
+        AuthResult.Success(User(id = "1", email = "a@b.c", displayName = "Alice"))
     val loginCalls = mutableListOf<Pair<String, String>>()
     val registerCalls = mutableListOf<Triple<String, String, String>>()
 
@@ -18,8 +19,15 @@ internal class FakeAuthRepository : AuthRepository {
         return result
     }
 
-    override suspend fun register(email: String, password: String, displayName: String): AuthResult {
+    override suspend fun register(
+        email: String,
+        password: String,
+        displayName: String
+    ): AuthResult {
         registerCalls += Triple(email, password, displayName)
         return result
+    }
+
+    override suspend fun logout() {
     }
 }

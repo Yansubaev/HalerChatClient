@@ -165,4 +165,46 @@ class DefaultAuthRepositoryTest {
         assertEquals(AuthResult.EmailTaken, result)
         assertNull(sessionStore.session.first())
     }
+
+    @Test
+    fun logout_success_clearsSession() = runTest {
+        sessionStore.save(Session(accessToken = "a", refreshToken = "r", user = user))
+        val engine = MockEngine { respond("", HttpStatusCode.NoContent) }
+
+        repository(engine).logout()
+
+        assertEquals(1, engine.requestHistory.size)
+        assertNull(sessionStore.session.first())
+    }
+
+    @Test
+    fun logout_invalidToken_stillClearsSession() = runTest {
+        sessionStore.save(Session(accessToken = "a", refreshToken = "r", user = user))
+        val repository = repository(
+            respondingWith(HttpStatusCode.Unauthorized, """{"error":"invalid refresh token"}""")
+        )
+
+        repository.logout()
+
+        assertNull(sessionStore.session.first())
+    }
+
+    @Test
+    fun logout_noNetwork_stillClearsSession() = runTest {
+        sessionStore.save(Session(accessToken = "a", refreshToken = "r", user = user))
+        val repository = repository(MockEngine { throw IOException("no network") })
+
+        repository.logout()
+
+        assertNull(sessionStore.session.first())
+    }
+
+    @Test
+    fun logout_withoutSession_doesNotCallServer() = runTest {
+        val engine = MockEngine { respond("", HttpStatusCode.NoContent) }
+
+        repository(engine).logout()
+
+        assertTrue(engine.requestHistory.isEmpty())
+    }
 }

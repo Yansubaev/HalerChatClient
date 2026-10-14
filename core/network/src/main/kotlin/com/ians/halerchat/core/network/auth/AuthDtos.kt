@@ -9,6 +9,9 @@ internal data class LoginRequest(
 )
 
 @Serializable
+internal data class LogoutRequest(val refreshToken: String)
+
+@Serializable
 internal data class RegisterRequest(
     val email: String,
     val password: String,

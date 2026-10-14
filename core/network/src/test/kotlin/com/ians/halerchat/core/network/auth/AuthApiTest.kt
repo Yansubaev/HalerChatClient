@@ -4,7 +4,9 @@ import com.ians.halerchat.core.network.ApiException
 import com.ians.halerchat.core.network.createHttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
+import io.ktor.client.engine.mock.toByteArray
 import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import kotlinx.coroutines.test.runTest
@@ -79,4 +81,33 @@ class AuthApiTest {
         }
     }
 
+    @Test
+    fun logout_postsRefreshTokenToDevPath_andAcceptsEmptyResponse() = runTest {
+        val engine = MockEngine { respond("", HttpStatusCode.NoContent) }
+
+        AuthApi(createHttpClient(engine)).logout("r")
+
+        val request = engine.requestHistory.single()
+        assertEquals(HttpMethod.Post, request.method)
+        assertEquals("/dev/auth/logout", request.url.encodedPath)
+        assertEquals("""{"refreshToken":"r"}""", request.body.toByteArray().decodeToString())
+    }
+
+    @Test
+    fun logout_withInvalidToken_throwsApiException() = runTest {
+        val engine = MockEngine {
+            respond(
+                """{"error":"invalid refresh token"}""",
+                status = HttpStatusCode.Unauthorized,
+                headers = headersOf(HttpHeaders.ContentType, "application/json"),
+            )
+        }
+        try {
+            AuthApi(createHttpClient(engine)).logout("r")
+            fail("Expected ApiException")
+        } catch (e: ApiException) {
+            assertEquals(401, e.status)
+            assertEquals("invalid refresh token", e.message)
+        }
+    }
 }

@@ -19,4 +19,11 @@ class AuthApi(private val client: HttpClient) {
             contentType(ContentType.Application.Json)
             setBody(RegisterRequest(email, password, displayName))
         }.body()
+
+    suspend fun logout(refreshToken: String) {
+        client.post("auth/logout") {
+            contentType(ContentType.Application.Json)
+            setBody(LogoutRequest(refreshToken))
+        }
+    }
 }
