@@ -27,7 +27,7 @@ internal class RegisterViewModel(
             }
 
             is RegisterIntent.NameChanged -> _state.update {
-                it.copy(displayName = intent.value, error = null)
+                it.copy(displayName = intent.value.take(RegisterState.NAME_MAX_LENGTH), error = null)
             }
 
             RegisterIntent.Submit -> submit()

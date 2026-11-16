@@ -1,10 +1,8 @@
 <resources>
     <string name="auth_name_label">Name</string>
-    <string name="auth_name_placeholder">Enter your name</string>
     <string name="auth_email_label">Email</string>
-    <string name="auth_email_placeholder">Enter your email</string>
+    <string name="auth_email_placeholder">name@example.com</string>
     <string name="auth_password_label">Password</string>
-    <string name="auth_password_placeholder">Enter your password</string>
     <string name="auth_login_button">Log in</string>
     <string name="auth_register_button">Register</string>
     <string name="auth_create_account">Create an account</string>
@@ -16,4 +14,12 @@
     <string name="auth_error_rate_limited">Too many attempts. Try again later</string>
     <string name="auth_error_unknown">An unexpected error occurred</string>
     <string name="auth_error_validation">Invalid input</string>
+
+    <string name="auth_register_title">Create your account</string>
+    <string name="auth_login_loading">Logging in…</string>
+    <string name="auth_register_loading">Registering…</string>
+    <string name="auth_password_hint">At least 8 characters, with a letter and a digit</string>
+    <string name="auth_password_show">Show password</string>
+    <string name="auth_password_hide">Hide password</string>
+    <string name="auth_name_counter">%1$d/%2$d</string>
 </resources>

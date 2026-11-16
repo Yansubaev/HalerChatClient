@@ -13,3 +13,12 @@ internal fun AuthResult.Failure.toErrorText(): String = when (this) {
     AuthResult.Unknown -> stringResource(R.string.auth_error_unknown)
     is AuthResult.Validation -> message ?: stringResource(R.string.auth_error_validation)
 }
+
+/**
+ * Server validation text looks like "password: must be at least 8 characters; email: must be a valid email address"
+ * (spec 3.4). Returns field name ("email", "password", "displayName") -> message.
+ */
+internal fun AuthResult.Validation.fieldErrors(): Map<String, String> =
+    message.orEmpty().split(';').mapNotNull { part ->
+        part.split(':', limit = 2).takeIf { it.size == 2 }?.let { it[0].trim() to it[1].trim() }
+    }.toMap()

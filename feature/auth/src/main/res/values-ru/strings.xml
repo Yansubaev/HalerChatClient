@@ -1,10 +1,8 @@
 <resources>
     <string name="auth_name_label">Имя</string>
-    <string name="auth_name_placeholder">Введите имя</string>
     <string name="auth_email_label">Эл. почта</string>
-    <string name="auth_email_placeholder">Введите email</string>
+    <string name="auth_email_placeholder">name@example.com</string>
     <string name="auth_password_label">Пароль</string>
-    <string name="auth_password_placeholder">Введите пароль</string>
     <string name="auth_login_button">Войти</string>
     <string name="auth_register_button">Зарегистрироваться</string>
     <string name="auth_create_account">Создать аккаунт</string>
@@ -16,4 +14,12 @@
     <string name="auth_error_rate_limited">Слишком много попыток. Попробуйте позже</string>
     <string name="auth_error_unknown">Произошла непредвиденная ошибка</string>
     <string name="auth_error_validation">Проверьте введённые данные</string>
+
+    <string name="auth_register_title">Создайте аккаунт</string>
+    <string name="auth_login_loading">Входим…</string>
+    <string name="auth_register_loading">Регистрируем…</string>
+    <string name="auth_password_hint">Не менее 8 символов, с буквой и цифрой</string>
+    <string name="auth_password_show">Показать пароль</string>
+    <string name="auth_password_hide">Скрыть пароль</string>
+    <string name="auth_name_counter">%1$d/%2$d</string>
 </resources>

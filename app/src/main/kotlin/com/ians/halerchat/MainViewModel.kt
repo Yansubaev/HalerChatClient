@@ -14,7 +14,7 @@ class MainViewModel(private val authRepository: AuthRepository) : ViewModel() {
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = null
         )
-
+    
     fun logout(){
         viewModelScope.launch { authRepository.logout() }
     }
