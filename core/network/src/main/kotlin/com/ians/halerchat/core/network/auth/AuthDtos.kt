@@ -19,10 +19,21 @@ internal data class RegisterRequest(
 )
 
 @Serializable
+internal data class RefreshRequest(
+    val refreshToken: String
+)
+
+@Serializable
 data class AuthResultDto(
     val accessToken: String,
     val refreshToken: String,
     val user: UserDto
+)
+
+@Serializable
+data class RefreshResultDto(
+    val accessToken: String,
+    val refreshToken: String
 )
 
 @Serializable

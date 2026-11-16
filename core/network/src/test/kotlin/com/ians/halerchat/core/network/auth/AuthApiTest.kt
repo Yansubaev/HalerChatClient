@@ -26,7 +26,8 @@ class AuthApiTest {
                 headers = headersOf(HttpHeaders.ContentType, "application/json"),
             )
         }
-        val result = AuthApi(createHttpClient(engine)).login("a@b.c", "secret123")
+        val result =
+            AuthApi(createHttpClient(FakeTokenStorage(), engine)).login("a@b.c", "secret123")
         assertEquals("Alice", result.user.displayName)
     }
 
@@ -39,13 +40,17 @@ class AuthApiTest {
                 headers = headersOf(HttpHeaders.ContentType, "application/json"),
             )
         }
+        // токены есть: без AuthCircuitBreaker этот 401 запустил бы refresh
+        val storage = FakeTokenStorage(AuthTokens("a", "r"))
         try {
-            AuthApi(createHttpClient(engine)).login("a@b.c", "wrong")
+            AuthApi(createHttpClient(storage, engine)).login("a@b.c", "wrong")
             fail("Expected ApiException")
         } catch (e: ApiException) {
             assertEquals(401, e.status)
             assertEquals("INVALID_CREDENTIALS", e.code)
         }
+        assertEquals(1, engine.requestHistory.size)
+        assertEquals(AuthTokens("a", "r"), storage.tokens)
     }
 
     @Test
@@ -59,7 +64,11 @@ class AuthApiTest {
                 headers = headersOf(HttpHeaders.ContentType, "application/json")
             )
         }
-        val result = AuthApi(createHttpClient(engine)).register("a@b.c", "secret123", "Alice")
+        val result = AuthApi(createHttpClient(FakeTokenStorage(), engine)).register(
+            "a@b.c",
+            "secret123",
+            "Alice"
+        )
         assertEquals("Alice", result.user.displayName)
     }
 
@@ -73,7 +82,11 @@ class AuthApiTest {
             )
         }
         try {
-            AuthApi(createHttpClient(engine)).register("a@b.c", "secret123", "Alice")
+            AuthApi(createHttpClient(FakeTokenStorage(), engine)).register(
+                "a@b.c",
+                "secret123",
+                "Alice"
+            )
             fail("Expected ApiException")
         } catch (e: ApiException) {
             assertEquals(409, e.status)
@@ -85,7 +98,7 @@ class AuthApiTest {
     fun logout_postsRefreshTokenToDevPath_andAcceptsEmptyResponse() = runTest {
         val engine = MockEngine { respond("", HttpStatusCode.NoContent) }
 
-        AuthApi(createHttpClient(engine)).logout("r")
+        AuthApi(createHttpClient(FakeTokenStorage(), engine)).logout("r")
 
         val request = engine.requestHistory.single()
         assertEquals(HttpMethod.Post, request.method)
@@ -103,7 +116,44 @@ class AuthApiTest {
             )
         }
         try {
-            AuthApi(createHttpClient(engine)).logout("r")
+            AuthApi(createHttpClient(FakeTokenStorage(), engine)).logout("r")
+            fail("Expected ApiException")
+        } catch (e: ApiException) {
+            assertEquals(401, e.status)
+            assertEquals("invalid refresh token", e.message)
+        }
+    }
+
+    @Test
+    fun refresh_postsRefreshTokenToDevPath_andParsesNewPair() = runTest {
+        val engine = MockEngine {
+            respond(
+                """{"accessToken":"a2","refreshToken":"r2"}""",
+                headers = headersOf(HttpHeaders.ContentType, "application/json"),
+            )
+        }
+
+        val result = AuthApi(createHttpClient(FakeTokenStorage(), engine)).refresh("r")
+
+        val request = engine.requestHistory.single()
+        assertEquals(HttpMethod.Post, request.method)
+        assertEquals("/dev/auth/refresh", request.url.encodedPath)
+        assertEquals("""{"refreshToken":"r"}""", request.body.toByteArray().decodeToString())
+        assertEquals("a2", result.accessToken)
+        assertEquals("r2", result.refreshToken)
+    }
+
+    @Test
+    fun refresh_withInvalidToken_throwsApiException() = runTest {
+        val engine = MockEngine {
+            respond(
+                """{"error":"invalid refresh token"}""",
+                status = HttpStatusCode.Unauthorized,
+                headers = headersOf(HttpHeaders.ContentType, "application/json"),
+            )
+        }
+        try {
+            AuthApi(createHttpClient(FakeTokenStorage(), engine)).refresh("r")
             fail("Expected ApiException")
         } catch (e: ApiException) {
             assertEquals(401, e.status)

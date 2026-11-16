@@ -46,7 +46,7 @@ class DefaultAuthRepositoryTest {
     }
 
     private fun repository(engine: MockEngine) = DefaultAuthRepository(
-        api = AuthApi(createHttpClient(engine)),
+        api = AuthApi(createHttpClient(sessionStore, engine)),
         sessionStore = sessionStore,
     )
 

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "DESIGN_PROMPT.md",
-                "mode": "preview",
+                "file": "HALERCHAT_CLIENT_SPEC.md",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "DESIGN_PROMPT"
+              "title": "HALERCHAT_CLIENT_SPEC"
             }
           }
         ]
@@ -83,7 +83,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "76e2606ff462be2e",
@@ -190,7 +191,17 @@
   },
   "active": "ad998dc3f7d57e78",
   "lastOpenFiles": [
-    "feature/auth/src/main/kotlin/com/ians/halerchat/feature/auth/login/LoginScreen.kt~",
+    "build/reports/configuration-cache/eqfxcebvepxovev8c0qyetzm/21jnb2jsecoa013obxeuyekfr/configuration-cache-report.html",
+    "build/reports/configuration-cache/eqfxcebvepxovev8c0qyetzm/21jnb2jsecoa013obxeuyekfr",
+    "build/reports/configuration-cache/eqfxcebvepxovev8c0qyetzm",
+    "core/network/build/reports/tests/testDebugUnitTest/WEoL7gxJEl4/gX5-BlnZaqw.html",
+    "core/network/build/kotlin/compileDebugKotlin/cacheable/dirty-sources.txt",
+    "core/network/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes/META-INF/network.kotlin_module",
+    "core/network/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes/com/ians/halerchat/core/network/auth/AuthApi$refresh$1.class",
+    "core/network/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes/com/ians/halerchat/core/network/auth/AuthApi$logout$1.class",
+    "core/network/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes/com/ians/halerchat/core/network/auth/AuthApi$register$1.class",
+    "core/network/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes/com/ians/halerchat/core/network/auth/AuthApi$login$1.class",
+    "core/network/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes/com/ians/halerchat/core/network/auth/AuthApi.class",
     "HALERCHAT_CLIENT_SPEC.md"
   ]
 }

@@ -7,14 +7,17 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.ians.halerchat.core.model.User
+import com.ians.halerchat.core.network.auth.AuthTokens
+import com.ians.halerchat.core.network.auth.TokenStorage
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 internal val Context.sessionDataStore: DataStore<Preferences> by
 preferencesDataStore(name = "session")
 
 // TODO: шифрование refresh токена
-internal class SessionStore(private val dataStore: DataStore<Preferences>) {
+internal class SessionStore(private val dataStore: DataStore<Preferences>) : TokenStorage {
     val session: Flow<Session?> = dataStore.data.map { prefs ->
         Session(
             accessToken = prefs[ACCESS_TOKEN] ?: return@map null,
@@ -37,9 +40,24 @@ internal class SessionStore(private val dataStore: DataStore<Preferences>) {
         }
     }
 
-    suspend fun clear() {
+    override suspend fun updateTokens(accessToken: String, refreshToken: String) {
+        dataStore.edit { prefs ->
+            prefs[ACCESS_TOKEN] = accessToken
+            prefs[REFRESH_TOKEN] = refreshToken
+        }
+    }
+
+    override suspend fun clear() {
         dataStore.edit { it.clear() }
     }
+
+    override suspend fun loadTokens(): AuthTokens? =
+        session.first()?.let {
+            AuthTokens(
+                accessToken = it.accessToken,
+                refreshToken = it.refreshToken
+            )
+        }
 
     private companion object {
         val ACCESS_TOKEN = stringPreferencesKey("access_token")

@@ -60,4 +60,26 @@ class SessionStoreTest {
 
         assertNull(store.session.first())
     }
+
+    @Test
+    fun updateTokens_replacesTokens_andKeepsUser() = runTest {
+        val store = createStore()
+        store.save(session)
+
+        store.updateTokens("new_access", "new_refresh")
+
+        assertEquals(
+            session.copy(accessToken = "new_access", refreshToken = "new_refresh"),
+            store.session.first()
+        )
+    }
+
+    @Test
+    fun updateTokens_onEmptyStore_sessionStaysNull() = runTest {
+        val store = createStore()
+
+        store.updateTokens("new_access", "new_refresh")
+
+        assertNull(store.session.first())
+    }
 }

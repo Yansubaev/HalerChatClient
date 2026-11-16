@@ -33,6 +33,7 @@ internal class DefaultAuthRepository(
         } catch (e: IOException) {
         }
         sessionStore.clear()
+        api.clearTokens()
     }
 
     private suspend fun authenticate(call: suspend () -> AuthResultDto): AuthResult =
