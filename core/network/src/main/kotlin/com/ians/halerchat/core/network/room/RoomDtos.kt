@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 /** POST /rooms — отправляется серверу. Обязателен только name. */
 @Serializable
-data class CreateRoomRequest(
+internal data class CreateRoomRequest(
     val name: String,
     val description: String? = null,
     val visibility: String? = null
@@ -28,3 +28,65 @@ data class RoomDto(
 /** GET /rooms */
 @Serializable
 data class RoomsResponseDto(val rooms: List<RoomDto>)
+
+@Serializable
+data class RoomMemberDto(
+    val roomID: String,
+    val userID: String,
+    val displayName: String,
+    val role: String,
+    val joinedAt: String
+)
+
+/** GET /rooms/{id}. room.members в JSON дублирует members — игнорируем. */
+@Serializable
+data class RoomDetailDto(
+    val room: RoomDto,
+    val members: List<RoomMemberDto>
+)
+
+/** PATCH /rooms/{id} */
+@Serializable
+internal data class UpdateVisibilityRequest(val visibility: String)
+
+/** accessCode == "" для public. */
+@Serializable
+data class UpdateVisibilityResponseDto(
+    val id: String,
+    val visibility: String,
+    val accessCode: String
+)
+
+/** POST /rooms/{id}/invite/reset. accessCode только для private. */
+@Serializable
+data class ResetInviteResponseDto(
+    val inviteToken: String,
+    val accessCode: String? = null
+)
+
+/** GET /rooms/join/{token} (Accept: application/json) */
+@Serializable
+data class RoomPreviewDto(
+    val roomID: String,
+    val name: String,
+    val visibility: String,
+    val memberCount: Int
+)
+
+/** POST /rooms/join/{token}. accessCode обязателен для private. */
+@Serializable
+internal data class JoinRoomRequest(val accessCode: String? = null)
+
+@Serializable
+data class JoinRoomResponseDto(val room: JoinedRoomDto)
+
+/** memberCount — значение до вступления. */
+@Serializable
+data class JoinedRoomDto(
+    val id: String,
+    val name: String,
+    val visibility: String,
+    val memberCount: Int,
+    val ownerID: String,
+    val ownerName: String
+)

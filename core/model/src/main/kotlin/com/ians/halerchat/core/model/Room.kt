@@ -12,3 +12,16 @@ data class Room(
     val inviteToken: String?,
     val accessCode: String?
 )
+
+data class RoomMember(
+    val roomId: String,
+    val userId: String,
+    val displayName: String,
+    val role: String,
+    val joinedAt: String
+)
+
+data class RoomDetail(
+    val room: Room,
+    val members: List<RoomMember>
+)

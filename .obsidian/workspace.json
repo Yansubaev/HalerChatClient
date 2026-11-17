@@ -191,17 +191,17 @@
   },
   "active": "ad998dc3f7d57e78",
   "lastOpenFiles": [
-    "build/reports/configuration-cache/eqfxcebvepxovev8c0qyetzm/21jnb2jsecoa013obxeuyekfr/configuration-cache-report.html",
-    "build/reports/configuration-cache/eqfxcebvepxovev8c0qyetzm/21jnb2jsecoa013obxeuyekfr",
-    "build/reports/configuration-cache/eqfxcebvepxovev8c0qyetzm",
-    "core/network/build/reports/tests/testDebugUnitTest/WEoL7gxJEl4/gX5-BlnZaqw.html",
-    "core/network/build/kotlin/compileDebugKotlin/cacheable/dirty-sources.txt",
-    "core/network/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes/META-INF/network.kotlin_module",
-    "core/network/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes/com/ians/halerchat/core/network/auth/AuthApi$refresh$1.class",
-    "core/network/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes/com/ians/halerchat/core/network/auth/AuthApi$logout$1.class",
-    "core/network/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes/com/ians/halerchat/core/network/auth/AuthApi$register$1.class",
-    "core/network/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes/com/ians/halerchat/core/network/auth/AuthApi$login$1.class",
-    "core/network/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes/com/ians/halerchat/core/network/auth/AuthApi.class",
+    "core/network/src/main/kotlin/com/ians/halerchat/core/network/room/RoomDtos.kt~",
+    "build/reports/configuration-cache/1id9cqafnfx7mslsacit1zyri/ck4tsk47mfwpzydfbb7q89yrl/configuration-cache-report.html",
+    "build/reports/configuration-cache/1id9cqafnfx7mslsacit1zyri/ck4tsk47mfwpzydfbb7q89yrl",
+    "build/reports/configuration-cache/1id9cqafnfx7mslsacit1zyri",
+    "core/network/build/test-results/testDebugUnitTest/TEST-com.ians.halerchat.core.network.room.RoomsApiTest.xml",
+    "core/network/build/reports/tests/testDebugUnitTest/5azN_LU2vOI/rHuKolTkon0.html",
+    "core/network/build/reports/tests/testDebugUnitTest/5azN_LU2vOI/index.html",
+    "core/network/build/reports/tests/testDebugUnitTest/5azN_LU2vOI",
+    "core/network/build/intermediates/java_res/debugUnitTest/processDebugUnitTestJavaRes/out/com/ians/halerchat/core/network/room",
+    "core/network/build/kotlin/compileDebugUnitTestKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.s",
+    "core/network/build/kotlin/compileDebugUnitTestKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values",
     "HALERCHAT_CLIENT_SPEC.md"
   ]
 }
