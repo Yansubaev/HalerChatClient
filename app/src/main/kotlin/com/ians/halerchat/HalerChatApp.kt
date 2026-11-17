@@ -21,15 +21,17 @@ import androidx.navigation3.ui.NavDisplay
 import com.ians.halerchat.feature.auth.LoginKey
 import com.ians.halerchat.feature.auth.RegisterKey
 import com.ians.halerchat.feature.auth.authEntries
+import com.ians.halerchat.feature.rooms.RoomsKey
+import com.ians.halerchat.feature.rooms.roomsEntries
 
 @Composable
 fun HalerChatApp(viewModel: MainViewModel) {
     val isLoggedIn by viewModel.isLoggedIn.collectAsStateWithLifecycle()
     val loggedIn = isLoggedIn ?: return
-    val backStack = rememberNavBackStack(if (loggedIn) HomeKey else LoginKey)
+    val backStack = rememberNavBackStack(if (loggedIn) RoomsKey else LoginKey)
 
     LaunchedEffect(loggedIn) {
-        if (!loggedIn && backStack.contains(HomeKey)) {
+        if (!loggedIn && backStack.contains(RoomsKey)) {
             backStack.clear()
             backStack.add(LoginKey)
         }
@@ -46,7 +48,7 @@ fun HalerChatApp(viewModel: MainViewModel) {
             authEntries(
                 onLoggedIn = {
                     backStack.clear()
-                    backStack.add(HomeKey)
+                    backStack.add(RoomsKey)
                 },
                 onRegisterClick = {
                     backStack.add(RegisterKey)
@@ -55,19 +57,11 @@ fun HalerChatApp(viewModel: MainViewModel) {
                     backStack.removeLastOrNull()
                 }
             )
-            entry<HomeKey> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Column {
-                        Text("Home")
-                        Button(onClick = viewModel::logout) {
-                            Text("Logout")
-                        }
-                    }
-                }
-            }
+            roomsEntries(
+                onLogout = viewModel::logout,
+                onCreateRoom = {},
+                onJoinRoom = {},
+            )
         }
     )
 }

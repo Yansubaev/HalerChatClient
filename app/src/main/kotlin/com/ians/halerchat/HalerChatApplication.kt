@@ -4,6 +4,7 @@ import android.app.Application
 import com.ians.halerchat.core.data.di.dataModule
 import com.ians.halerchat.di.appModule
 import com.ians.halerchat.feature.auth.di.authModule
+import com.ians.halerchat.feature.rooms.di.roomsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -14,7 +15,7 @@ class HalerChatApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@HalerChatApplication)
-            modules(appModule, dataModule, authModule)
+            modules(appModule, dataModule, authModule, roomsModule)
         }
     }
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rooms_title">Комнаты</string>
+    <string name="rooms_cd_logout">Выйти</string>
+    <string name="rooms_cd_private">Приватная комната</string>
+
+    <string name="rooms_empty_title">Комнат пока нет</string>
+    <string name="rooms_empty_body">Создайте комнату или присоединитесь к существующей по ссылке-приглашению</string>
+    <string name="rooms_create">Создать комнату</string>
+    <string name="rooms_join_with_link">Войти по ссылке</string>
+
+    <string name="rooms_error_title">Не удалось загрузить комнаты</string>
+    <string name="rooms_error_body">Что-то пошло не так при загрузке комнат. Проверьте подключение и попробуйте ещё раз.</string>
+    <string name="rooms_retry">Повторить</string>
+
+    <plurals name="rooms_member_count">
+        <item quantity="one">%d участник</item>
+        <item quantity="few">%d участника</item>
+        <item quantity="many">%d участников</item>
+        <item quantity="other">%d участника</item>
+    </plurals>
+</resources>

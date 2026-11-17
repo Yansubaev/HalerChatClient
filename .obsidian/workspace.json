@@ -191,17 +191,17 @@
   },
   "active": "ad998dc3f7d57e78",
   "lastOpenFiles": [
-    "core/network/src/main/kotlin/com/ians/halerchat/core/network/room/RoomDtos.kt~",
-    "build/reports/configuration-cache/1id9cqafnfx7mslsacit1zyri/ck4tsk47mfwpzydfbb7q89yrl/configuration-cache-report.html",
-    "build/reports/configuration-cache/1id9cqafnfx7mslsacit1zyri/ck4tsk47mfwpzydfbb7q89yrl",
-    "build/reports/configuration-cache/1id9cqafnfx7mslsacit1zyri",
-    "core/network/build/test-results/testDebugUnitTest/TEST-com.ians.halerchat.core.network.room.RoomsApiTest.xml",
-    "core/network/build/reports/tests/testDebugUnitTest/5azN_LU2vOI/rHuKolTkon0.html",
-    "core/network/build/reports/tests/testDebugUnitTest/5azN_LU2vOI/index.html",
-    "core/network/build/reports/tests/testDebugUnitTest/5azN_LU2vOI",
-    "core/network/build/intermediates/java_res/debugUnitTest/processDebugUnitTestJavaRes/out/com/ians/halerchat/core/network/room",
-    "core/network/build/kotlin/compileDebugUnitTestKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.s",
-    "core/network/build/kotlin/compileDebugUnitTestKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values",
+    "build/reports/configuration-cache/6044lio6szjxpr4uat2i4j8ps/35g9ziswkknrkcn3yzh48nqj0/configuration-cache-report.html",
+    "build/reports/configuration-cache/6044lio6szjxpr4uat2i4j8ps/35g9ziswkknrkcn3yzh48nqj0",
+    "app/build/intermediates/apk/debug/output-metadata.json",
+    "app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/com/ians/halerchat/HalerChatAppKt$HalerChatApp$3$4$1.dex",
+    "app/build/kotlin/compileDebugKotlin/cacheable/dirty-sources.txt",
+    "app/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes/META-INF/app.kotlin_module",
+    "app/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes/com/ians/halerchat/HalerChatAppKt$HalerChatApp$$inlined$entryProvider$default$1.class",
+    "app/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes/com/ians/halerchat/HalerChatAppKt$HalerChatApp$3$4$1.class",
+    "app/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes/com/ians/halerchat/HalerChatAppKt$HalerChatApp$1$1.class",
+    "app/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes/com/ians/halerchat/HalerChatAppKt.class",
+    "build/reports/configuration-cache/dmepk26kgg8hb8c9opij6115l/ef0qh7ot4mgoxripha7upo3ee/configuration-cache-report.html",
     "HALERCHAT_CLIENT_SPEC.md"
   ]
 }
