@@ -22,3 +22,6 @@ local.properties
 
 # служебные данные Kotlin Gradle plugin (маркеры сессий, отчёты об ошибках)
 .kotlin/
+
+# настройки Obsidian
+/.obsidian/
