@@ -13,7 +13,7 @@ internal class DefaultRoomsRepository(
             RoomsResult.Success(rooms)
         } catch (e: ApiException) {
             e.toRoomsResult()
-        } catch (e: IOException) {
+        } catch (_: IOException) {
             RoomsResult.Network
         }
 

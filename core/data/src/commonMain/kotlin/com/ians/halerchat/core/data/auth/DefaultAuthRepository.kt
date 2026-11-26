@@ -29,8 +29,8 @@ internal class DefaultAuthRepository(
         val session = sessionStore.session.first() ?: return
         try {
             api.logout(session.refreshToken)
-        } catch (e: ApiException) {
-        } catch (e: IOException) {
+        } catch (_: ApiException) {
+        } catch (_: IOException) {
         }
         sessionStore.clear()
         api.clearTokens()
@@ -43,7 +43,7 @@ internal class DefaultAuthRepository(
             AuthResult.Success(session.user)
         } catch (e: ApiException) {
             e.toAuthResult()
-        } catch (e: IOException) {
+        } catch (_: IOException) {
             AuthResult.Network
         }
 

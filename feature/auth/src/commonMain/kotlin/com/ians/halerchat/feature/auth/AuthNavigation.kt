@@ -7,7 +7,6 @@ import com.ians.halerchat.feature.auth.register.RegisterRoute
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
-import kotlinx.serialization.modules.subclass
 
 @Serializable
 data object LoginKey : NavKey
