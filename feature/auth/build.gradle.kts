@@ -1,38 +1,51 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
+    alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
 }
 
-android {
-    namespace = "com.ians.halerchat.feature.auth"
-    compileSdk {
-        version = release(37)
-    }
-
-    defaultConfig {
+kotlin {
+    android {
+        namespace = "com.ians.halerchat.feature.auth"
+        compileSdk = 37
         minSdk = 24
-
+        compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }
+        androidResources { enable = true }   // иначе Res не найдёт ресурсы на Android
+        withHostTest { }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
+    iosArm64()
+    iosSimulatorArm64()
 
+    sourceSets {
+        commonMain.dependencies {
+            implementation(project(":core:designsystem"))
+            implementation(project(":core:data"))
+
+            implementation(libs.compose.components.resources)
+            implementation(libs.compose.ui.tooling.preview)
+
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.compose.viewmodel)
+
+            implementation(libs.jetbrains.lifecycle.viewmodel.compose)
+            implementation(libs.jetbrains.lifecycle.runtime.compose)
+            implementation(libs.androidx.navigation3.runtime)
+        }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
+        }
+    }
+}
+
+compose.resources {
+    packageOfResClass = "com.ians.halerchat.feature.auth.resources"
 }
 
 dependencies {
-    implementation(project(":core:designsystem"))
-    implementation(project(":core:data"))
-
-    implementation(platform(libs.koin.bom))
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.koin.androidx.compose)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.androidx.navigation3.runtime)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-
-    testImplementation(libs.junit)
-    testImplementation(libs.kotlinx.coroutines.test)
+    androidRuntimeClasspath(libs.compose.ui.tooling)   // рендер @Preview в Android Studio
 }

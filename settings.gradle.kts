@@ -23,7 +23,8 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Haler Chat"
-include(":app")
+include(":androidApp")
+include(":composeApp")
 include(":core:model")
 include(":core:data")
 include(":core:network")

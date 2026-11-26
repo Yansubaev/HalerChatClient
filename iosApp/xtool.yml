@@ -1,0 +1,4 @@
+version: 1
+bundleID: com.ians.halerchat
+product: HalerChat
+infoPath: Info.plist
