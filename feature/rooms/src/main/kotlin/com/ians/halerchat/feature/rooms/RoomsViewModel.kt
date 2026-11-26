@@ -2,8 +2,8 @@ package com.ians.halerchat.feature.rooms
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ians.halerchat.core.data.room.RoomsRepository
-import com.ians.halerchat.core.data.room.RoomsResult
+import com.ians.halerchat.core.data.rooms.RoomsRepository
+import com.ians.halerchat.core.data.rooms.RoomsResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

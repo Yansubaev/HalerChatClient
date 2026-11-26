@@ -16,7 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ians.halerchat.core.data.room.RoomsResult
+import com.ians.halerchat.core.data.rooms.RoomsResult
 import com.ians.halerchat.core.designsystem.theme.HalerChatTheme
 import com.ians.halerchat.core.model.Room
 import org.koin.androidx.compose.koinViewModel

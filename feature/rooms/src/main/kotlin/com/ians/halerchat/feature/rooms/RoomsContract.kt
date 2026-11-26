@@ -1,6 +1,6 @@
 package com.ians.halerchat.feature.rooms
 
-import com.ians.halerchat.core.data.room.RoomsResult
+import com.ians.halerchat.core.data.rooms.RoomsResult
 import com.ians.halerchat.core.model.Room
 
 internal data class RoomsState(
