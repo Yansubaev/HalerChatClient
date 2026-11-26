@@ -1,61 +1,67 @@
-Продолжаем учебный проект HalerChat Android. Ты ведёшь меня по нему как ментор, правила в AGENTS.md.
-Концепция и этапы: HalerChat_Android_Project_Concept.md. Контракт бэкенда: HALERCHAT_CLIENT_SPEC.md.
+Продолжаем учебный проект HalerChat (Kotlin Multiplatform: Android и iOS). Ты ведёшь меня по нему как ментор, правила в AGENTS.md.
+Концепция и этапы: HalerChat_Project_Concept.md. Контракт бэкенда: HALERCHAT_CLIENT_SPEC.md.
 
 ## Что сделано
 
-Этап 1 (Foundation) — частично, этап 2 (Authentication) — до logout включительно.
+Этап 2 (Authentication) закрыт, этап 3 (REST) начат: список комнат. Проект переведён на KMP
+(ветка feature/kmp-migration), собирается и работает на Android и на iPhone.
 
-- Модули: core:model, core:network, core:data, core:designsystem, feature:auth, app.
-- core:network: Ktor-клиент (createHttpClient), AuthApi (login, register, logout), ApiException.
-- core:data: SessionStore на DataStore; AuthRepository (интерфейс) и DefaultAuthRepository
-  с login, register, logout и isLoggedIn: Flow<Boolean>; AuthResult с sealed-уровнем Failure.
-  logout очищает SessionStore всегда (и при 401, и без сети); без сессии на сервер не ходит.
-- feature:auth: экраны логина и регистрации на MVI (Contract + ViewModel + Route/Screen),
-  строки в ресурсах на английском и русском с префиксом auth_.
-- app: Koin (appModule, dataModule, authModule), Navigation 3, MainViewModel выбирает
-  стартовый экран по сохранённой сессии; HomeKey пока заглушка Text("Home") с кнопкой Logout.
-  HalerChatApp сбрасывает back stack на LoginKey по isLoggedIn == false (LaunchedEffect) —
-  этот же механизм сработает при неудачном refresh.
-- MainActivity держит системный сплэш через OnPreDrawListener, пока сессия читается с диска.
-- Тесты: AuthApiTest, SessionStoreTest, DefaultAuthRepositoryTest, LoginViewModelTest,
-  RegisterViewModelTest; logout покрыт в AuthApiTest и DefaultAuthRepositoryTest (4 теста).
+- Модули: core:model, core:network, core:data, core:designsystem, feature:auth, feature:rooms,
+  composeApp, androidApp; iosApp — Swift-пакет вне Gradle.
+- Весь код и UI в commonMain; платформенное через expect/actual:
+  HTTP-движок (OkHttp / Darwin), путь к DataStore, тема (dynamic color только на Android).
+- core:network: Ktor-клиент, AuthApi (login, register, logout, refresh), RoomsApi
+  (getRooms, createRoom, room, deleteRoom, updateVisibility, resetInvite, leaveRoom,
+  roomPreview, joinRoom), ApiException. Access token и refresh по 401 — плагин Ktor Auth (bearer),
+  токены через интерфейс TokenStorage, его реализует SessionStore из core:data.
+  Неудачный refresh (401) очищает сессию.
+- core:data: SessionStore на DataStore; AuthRepository и RoomsRepository с Default-реализациями.
+- feature:auth: логин и регистрация на MVI, строки на английском и русском (Compose Resources).
+- feature:rooms: экран списка комнат (RoomsViewModel, Retry, Logout).
+- composeApp: HalerChatApp (тема, Navigation 3 с navConfig для сериализации ключей), MainViewModel,
+  Koin (initKoin), MainViewController для iOS.
+- androidApp: Application с initKoin, MainActivity со сплэшем, пока читается сессия.
+- iosApp: SwiftUI-обёртка над MainViewController. Сборка на Linux через omarchy-apple-dev:
+  `iosApp/build.sh`, установка `xtool install iosApp/xtool/HalerChat.app`.
+- Тесты в commonTest на kotlin.test: AuthApiTest, RoomsApiTest, HttpClientAuthTest, SessionStoreTest,
+  DefaultAuthRepositoryTest, DefaultRoomsRepositoryTest, LoginViewModelTest, RegisterViewModelTest.
+  Запуск: `./gradlew testAndroidHostTest`.
 
 ## Принятые решения (не предлагай менять без причины)
 
 - TextField через value/onValueChange, а не TextFieldState: хочу чистый MVI.
 - Навигация после логина — через состояние (isLoggedIn в State), а не через Channel с эффектами.
-- В тестах рукописные фейки (FakeAuthRepository), без библиотек моков.
+- В тестах рукописные фейки, без библиотек моков.
 - Интерфейс выделяем только когда он нужен для фейка в тесте.
 - Каждый Gradle-модуль объявляет свой Koin-модуль; классы по умолчанию internal.
 - Зависимости в build.gradle.kts добавляю я сам, ты говоришь, какие нужны.
 - Минимум кода: без абстракций «на будущее».
+- Новый код пишем в commonMain; в androidMain/iosMain только то, у чего нет общего API.
+- Только мультиплатформенные библиотеки (JetBrains lifecycle/navigation3, koin-compose-viewmodel,
+  Room KMP); строки и картинки — Compose Resources, аргументы в строках позиционные (%1$d).
+- Новый NavKey регистрируем в navSerializers своего модуля, иначе падает сохранение back stack.
 
 ## Что дальше
 
-Закрыть этап 2, по порядку:
+Этап 3: создание комнаты и присоединение к ней (спека: POST /rooms, GET и POST /rooms/join/{inviteToken}).
+RoomsApi.createRoom, roomPreview и joinRoom уже есть; нужны репозиторий, экраны и навигация.
+Открытые вопросы для разбора:
+- как пользователь получает inviteToken: ввод вручную или deep link serverlesschat://join/{token}
+  (на Android — intent-filter, на iOS — URL scheme в Info.plist);
+- private-комнаты требуют accessCode при join;
+- после создания или вступления обновить список комнат.
 
-1. ~~Logout~~ — готово (коммит c9177fd). Осталось проверить вручную на устройстве:
-   после Logout экран логина, «Назад» не возвращает на Home.
-2. Access token в запросах и refresh по 401 с повтором запроса (спека, раздел 3.3).
-   Refresh token ротируется, повтор старого отзывает все сессии, поэтому refresh
-   строго один в полёте. Открытые вопросы для разбора:
-   - подходит ли плагин Ktor Auth (bearer) и сериализует ли он refresh сам — проверить по документации Ktor 3.6;
-   - как core:network получит токены, если SessionStore лежит в core:data;
-   - неудачный refresh → очистка сессии → экран логина (тот же механизм, что в п. 1).
-3. Первый авторизованный запрос — список комнат (GET /rooms). Это начало этапа 3
-   и способ проверить п. 2 на живом сервере.
-
-Дальше по концепции: этап 3 REST (комнаты, история), этап 4 WebSocket, этап 5 Room.
+Дальше по концепции: остальной REST этапа 3 (детали, удаление, выход, история), этап 4 WebSocket, этап 5 Room.
 
 ## Отложено
 
-- Шифрование refresh token (Tink + Keystore), TODO в SessionStore.
+- Шифрование refresh token (TODO в SessionStore): на Android — Tink + Keystore, на iOS — Keychain.
 - Тест Koin verify().
 - Таймаут регистрации с последующим 409 → попытка логина; обработка битого JSON.
 - Текст VALIDATION_FAILED приходит с сервера по-английски и показывается как есть.
-- Уборка: .idea/misc.xml в индексе Git, неиспользуемые ресурсы в app (Lint: UnusedResources).
+- Уборка: .idea/misc.xml в индексе Git, неиспользуемые ресурсы в androidApp (Lint: UnusedResources).
+- iosApp/build.sh вручную докладывает Compose-ресурсы feature-модулей. Когда смержат
+  joshuaswarren/omarchy-apple-dev#190 и я сделаю git pull в ~/omarchy-apple-dev, этот шаг убрать.
+- Подпись бесплатным Apple ID живёт 7 дней: потом переустановить через xtool install.
 
-Gradle-зависимости модулей вычищены до реально используемых: новые добавляем по мере
-необходимости. Compose приходит в модули через api в core:designsystem.
-
-Начни с п. 2: сверься с документацией Ktor по плагину Auth (bearer), объясни подход и дай шаги, код пишу я.
+Начни с разбора: какие экраны и состояния нужны для создания комнаты и вступления по приглашению, дай шаги, код пишу я.

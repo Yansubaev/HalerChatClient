@@ -1,11 +1,12 @@
-# HalerChat Android — концепция проекта и целевой стек
+# HalerChat — концепция проекта и целевой стек
 
 ## 1. Цель проекта
 
-Разработать полноценный Android-клиент для существующего backend-проекта **HalerChat**.
+Разработать полноценный клиент для существующего backend-проекта **HalerChat** на Kotlin Multiplatform: общий код и UI на Compose Multiplatform, приложения для Android и iOS.
 
-Проект должен быть не просто pet-project для портфолио, а учебной площадкой для отработки архитектуры современного Android-приложения уровня Middle:
+Проект должен быть не просто pet-project для портфолио, а учебной площадкой для отработки архитектуры современного мобильного приложения уровня Middle:
 
+- Kotlin Multiplatform: общий код в `commonMain`, платформенный через `expect/actual`;
 - многомодульная архитектура;
 - MVI / UDF;
 - Koin;
@@ -21,7 +22,7 @@
 
 ## 2. Основная идея приложения
 
-Android-приложение является клиентом существующей серверной системы HalerChat.
+Приложение (Android и iOS) является клиентом существующей серверной системы HalerChat.
 
 Backend уже реализует:
 
@@ -36,7 +37,7 @@ Backend уже реализует:
 - signaling для voice/video;
 - serverless-инфраструктуру на AWS.
 
-Клиент должен использовать этот backend как реальный источник данных и реализовать полноценную Android-архитектуру вокруг него.
+Клиент должен использовать этот backend как реальный источник данных и реализовать полноценную архитектуру вокруг него.
 
 ---
 
@@ -100,8 +101,8 @@ WebSocket используется для:
 ### Основной стек
 
 ```text
-Kotlin
-Jetpack Compose
+Kotlin Multiplatform (Android, iOS)
+Compose Multiplatform + Compose Resources
 Material 3
 
 MVI / UDF
@@ -120,21 +121,23 @@ Ktor Client
 Ktor WebSockets
 kotlinx.serialization
 
-Room
+Room (KMP) + sqlite-bundled
+DataStore (KMP)
 
-WorkManager
-DataStore
-
-Navigation Compose или Navigation 3
+Navigation 3 (JetBrains, multiplatform)
 ```
+
+Платформенное, без общего API: WorkManager, Foreground Service, FCM, Keystore на Android
+и их аналоги на iOS. Подключается через `expect/actual` или отдельные реализации
+в `androidMain`/`iosMain`.
 
 ### Тестирование
 
 ```text
-JUnit
+kotlin.test (commonTest)
 kotlinx-coroutines-test
 Turbine
-MockK или собственные Fake-реализации
+собственные Fake-реализации (MockK не работает на iOS)
 Room tests
 Compose UI tests
 ```
@@ -229,19 +232,28 @@ callState
 
 ## 7. Многомодульная архитектура
 
-Начальная структура:
+Текущая структура:
 
 ```text
-:app
+:androidApp          Android-приложение: Activity, Application, сплэш
+:composeApp          общий корень: HalerChatApp, навигация, Koin, iOS-framework ComposeApp
+iosApp/              iOS-приложение: SwiftUI-обёртка, сборка на Linux через omarchy-apple-dev
 
 :core:model
 :core:network
-:core:database
-:core:common
+:core:data
 :core:designsystem
 
 :feature:auth
 :feature:rooms
+```
+
+Впереди:
+
+```text
+:core:database
+:core:common
+
 :feature:chat
 :feature:settings
 ```
@@ -479,9 +491,11 @@ WebRTC не должен блокировать разработку базов�
 
 ## 13. Итоговая учебная ценность
 
-HalerChat Android объединяет следующие направления разработки:
+HalerChat объединяет следующие направления разработки:
 
 ```text
+Kotlin Multiplatform
+        ↓
 Clean Architecture
         ↓
 Multi-module architecture
@@ -507,4 +521,4 @@ WebRTC
 Testing complex state
 ```
 
-Основная задача проекта — научиться строить не просто набор экранов, а полноценный Android-клиент для реальной распределённой backend-системы.
+Основная задача проекта — научиться строить не просто набор экранов, а полноценный мультиплатформенный клиент для реальной распределённой backend-системы.
