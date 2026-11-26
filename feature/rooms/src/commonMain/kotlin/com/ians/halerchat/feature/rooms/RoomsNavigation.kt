@@ -3,9 +3,18 @@ package com.ians.halerchat.feature.rooms
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.polymorphic
+import kotlinx.serialization.modules.subclass
 
 @Serializable
 data object RoomsKey : NavKey
+
+val roomsNavSerializers = SerializersModule {
+    polymorphic(NavKey::class) {
+        subclass(RoomsKey::class, RoomsKey.serializer())
+    }
+}
 
 fun EntryProviderScope<NavKey>.roomsEntries(
     onLogout: () -> Unit,

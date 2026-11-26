@@ -1,5 +1,6 @@
 package com.ians.halerchat.feature.rooms
 
+import com.ians.halerchat.feature.rooms.resources.*
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -12,14 +13,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ians.halerchat.core.data.rooms.RoomsResult
 import com.ians.halerchat.core.designsystem.theme.HalerChatTheme
 import com.ians.halerchat.core.model.Room
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun RoomsRoute(
@@ -51,12 +52,12 @@ internal fun RoomsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.rooms_title)) },
+                title = { Text(stringResource(Res.string.rooms_title)) },
                 actions = {
                     IconButton(onClick = onLogout) {
                         Icon(
-                            painter = painterResource(R.drawable.ic_logout),
-                            contentDescription = stringResource(R.string.rooms_cd_logout)
+                            painter = painterResource(Res.drawable.ic_logout),
+                            contentDescription = stringResource(Res.string.rooms_cd_logout)
                         )
                     }
                 },

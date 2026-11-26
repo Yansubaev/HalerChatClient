@@ -14,7 +14,7 @@
     <string name="rooms_retry">Retry</string>
 
     <plurals name="rooms_member_count">
-        <item quantity="one">%d member</item>
-        <item quantity="other">%d members</item>
+        <item quantity="one">%1$d member</item>
+        <item quantity="other">%1$d members</item>
     </plurals>
 </resources>

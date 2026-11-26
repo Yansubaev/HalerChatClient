@@ -1,6 +1,7 @@
 package com.ians.halerchat.feature.rooms
 
-import androidx.annotation.DrawableRes
+import com.ians.halerchat.feature.rooms.resources.*
+import org.jetbrains.compose.resources.DrawableResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,9 +32,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.pluralStringResource
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.pluralStringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -62,21 +63,21 @@ internal fun RoomsError(
     modifier: Modifier = Modifier,
 ) {
     RoomsMessage(
-        title = stringResource(R.string.rooms_error_title),
-        body = stringResource(R.string.rooms_error_body),
-        iconRes = R.drawable.ic_cloud_off,
+        title = stringResource(Res.string.rooms_error_title),
+        body = stringResource(Res.string.rooms_error_body),
+        iconRes = Res.drawable.ic_cloud_off,
         iconColor = MaterialTheme.colorScheme.onErrorContainer,
         iconBackgroundColor = MaterialTheme.colorScheme.errorContainer,
         modifier = modifier,
     ) {
         Button(onClick = onRetry) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_refresh),
+                painter = painterResource(Res.drawable.ic_refresh),
                 contentDescription = null,
                 modifier = Modifier.size(ButtonDefaults.IconSize)
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Text(text = stringResource(R.string.rooms_retry))
+            Text(text = stringResource(Res.string.rooms_retry))
         }
     }
 }
@@ -88,32 +89,32 @@ internal fun RoomsEmpty(
     modifier: Modifier = Modifier,
 ) {
     RoomsMessage(
-        title = stringResource(R.string.rooms_empty_title),
-        body = stringResource(R.string.rooms_empty_body),
-        iconRes = R.drawable.ic_forum,
+        title = stringResource(Res.string.rooms_empty_title),
+        body = stringResource(Res.string.rooms_empty_body),
+        iconRes = Res.drawable.ic_forum,
         iconColor = MaterialTheme.colorScheme.onSecondaryContainer,
         iconBackgroundColor = MaterialTheme.colorScheme.secondaryContainer,
         modifier = modifier,
     ) {
         Button(onClick = onCreateRoom) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_add),
+                painter = painterResource(Res.drawable.ic_add),
                 contentDescription = null,
                 modifier = Modifier.size(ButtonDefaults.IconSize)
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Text(text = stringResource(R.string.rooms_create))
+            Text(text = stringResource(Res.string.rooms_create))
         }
         FilledTonalButton(
             onClick = onJoinRoom
         ) {
             Icon(
-                painter = painterResource(R.drawable.ic_link),
+                painter = painterResource(Res.drawable.ic_link),
                 contentDescription = null,
                 modifier = Modifier.size(ButtonDefaults.IconSize)
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Text(text = stringResource(R.string.rooms_join_with_link))
+            Text(text = stringResource(Res.string.rooms_join_with_link))
         }
     }
 
@@ -185,8 +186,8 @@ private fun RoomListItem(room: Room) {
                     Spacer(Modifier.size(4.dp))
                     Icon(
                         modifier = Modifier.size(16.dp),
-                        painter = painterResource(R.drawable.ic_lock),
-                        contentDescription = stringResource(R.string.rooms_cd_private),
+                        painter = painterResource(Res.drawable.ic_lock),
+                        contentDescription = stringResource(Res.string.rooms_cd_private),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
@@ -195,7 +196,7 @@ private fun RoomListItem(room: Room) {
         supportingContent = {
             Text(
                 text = room.description ?: pluralStringResource(
-                    R.plurals.rooms_member_count,
+                    Res.plurals.rooms_member_count,
                     room.memberCount,
                     room.memberCount
                 ),
@@ -208,7 +209,7 @@ private fun RoomListItem(room: Room) {
 private fun RoomsMessage(
     title: String,
     body: String,
-    @DrawableRes iconRes: Int,
+    iconRes: DrawableResource,
     iconColor: Color,
     iconBackgroundColor: Color,
     modifier: Modifier = Modifier,

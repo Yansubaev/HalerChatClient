@@ -14,9 +14,9 @@
     <string name="rooms_retry">Повторить</string>
 
     <plurals name="rooms_member_count">
-        <item quantity="one">%d участник</item>
-        <item quantity="few">%d участника</item>
-        <item quantity="many">%d участников</item>
-        <item quantity="other">%d участника</item>
+        <item quantity="one">%1$d участник</item>
+        <item quantity="few">%1$d участника</item>
+        <item quantity="many">%1$d участников</item>
+        <item quantity="other">%1$d участника</item>
     </plurals>
 </resources>
