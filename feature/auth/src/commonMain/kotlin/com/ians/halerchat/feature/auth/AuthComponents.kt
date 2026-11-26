@@ -24,8 +24,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -34,6 +34,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ians.halerchat.core.data.auth.AuthResult
+import com.ians.halerchat.feature.auth.resources.*
 
 /** Logo tile + title: [large] = login (72dp tile), otherwise register (56dp tile). */
 @Composable
@@ -52,7 +53,7 @@ internal fun AuthHeader(large: Boolean, title: String) {
             contentAlignment = Alignment.Center,
         ) {
             Icon(
-                painter = painterResource(R.drawable.ic_forum),
+                painter = painterResource(Res.drawable.ic_forum),
                 contentDescription = null,
                 modifier = Modifier.size(if (large) 32.dp else 24.dp),
                 tint = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -83,16 +84,16 @@ internal fun PasswordField(
         onValueChange = onValueChange,
         enabled = enabled,
         isError = isError,
-        label = { Text(stringResource(R.string.auth_password_label)) },
+        label = { Text(stringResource(Res.string.auth_password_label)) },
         supportingText = supportingText?.let { { Text(it) } },
         singleLine = true,
         visualTransformation = if (visible) VisualTransformation.None else PasswordVisualTransformation(),
         trailingIcon = {
             IconButton(onClick = { visible = !visible }) {
                 Icon(
-                    painter = painterResource(if (visible) R.drawable.ic_visibility_off else R.drawable.ic_visibility),
+                    painter = painterResource(if (visible) Res.drawable.ic_visibility_off else Res.drawable.ic_visibility),
                     contentDescription = stringResource(
-                        if (visible) R.string.auth_password_hide else R.string.auth_password_show
+                        if (visible) Res.string.auth_password_hide else Res.string.auth_password_show
                     ),
                 )
             }
@@ -113,7 +114,7 @@ internal fun AuthErrorRow(error: AuthResult.Failure) {
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Icon(
-            painter = painterResource(R.drawable.ic_error),
+            painter = painterResource(Res.drawable.ic_error),
             contentDescription = null,
             modifier = Modifier.size(20.dp),
             tint = MaterialTheme.colorScheme.error,

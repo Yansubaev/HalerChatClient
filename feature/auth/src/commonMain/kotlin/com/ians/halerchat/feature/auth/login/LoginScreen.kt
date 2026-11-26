@@ -24,7 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.ContentType
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.semantics.contentType
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
@@ -37,8 +37,8 @@ import com.ians.halerchat.core.designsystem.theme.HalerChatTheme
 import com.ians.halerchat.feature.auth.AuthErrorRow
 import com.ians.halerchat.feature.auth.AuthHeader
 import com.ians.halerchat.feature.auth.PasswordField
-import com.ians.halerchat.feature.auth.R
-import org.koin.androidx.compose.koinViewModel
+import com.ians.halerchat.feature.auth.resources.*
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun LoginRoute(
@@ -86,8 +86,8 @@ internal fun LoginScreen(
                 value = state.email,
                 onValueChange = { onIntent(LoginIntent.EmailChanged(it)) },
                 enabled = !state.isLoading,
-                label = { Text(stringResource(R.string.auth_email_label)) },
-                placeholder = { Text(stringResource(R.string.auth_email_placeholder)) },
+                label = { Text(stringResource(Res.string.auth_email_label)) },
+                placeholder = { Text(stringResource(Res.string.auth_email_placeholder)) },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
@@ -117,14 +117,14 @@ internal fun LoginScreen(
                 if (state.isLoading) {
                     CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
                     Spacer(Modifier.size(8.dp))
-                    Text(stringResource(R.string.auth_login_loading))
+                    Text(stringResource(Res.string.auth_login_loading))
                 } else {
-                    Text(stringResource(R.string.auth_login_button))
+                    Text(stringResource(Res.string.auth_login_button))
                 }
             }
             Spacer(Modifier.height(12.dp))
             TextButton(onClick = onRegisterClick, enabled = !state.isLoading) {
-                Text(stringResource(R.string.auth_create_account))
+                Text(stringResource(Res.string.auth_create_account))
             }
             Spacer(Modifier.height(16.dp))
         }

@@ -26,7 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.ContentType
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.semantics.contentType
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
@@ -39,8 +39,8 @@ import com.ians.halerchat.core.designsystem.theme.HalerChatTheme
 import com.ians.halerchat.feature.auth.AuthErrorRow
 import com.ians.halerchat.feature.auth.AuthHeader
 import com.ians.halerchat.feature.auth.PasswordField
-import com.ians.halerchat.feature.auth.R
-import org.koin.androidx.compose.koinViewModel
+import com.ians.halerchat.feature.auth.resources.*
+import org.koin.compose.viewmodel.koinViewModel
 import com.ians.halerchat.feature.auth.fieldErrors
 
 @Composable
@@ -70,7 +70,7 @@ internal fun RegisterScreen(
     // Per spec 3.4: EMAIL_TAKEN belongs to the email field, VALIDATION_FAILED text is "<field>: <message>; ...".
     val validation = (state.error as? AuthResult.Validation)?.fieldErrors().orEmpty()
     val emailError = if (state.error == AuthResult.EmailTaken) {
-        stringResource(R.string.auth_error_email_taken)
+        stringResource(Res.string.auth_error_email_taken)
     } else {
         validation["email"]
     }
@@ -90,7 +90,7 @@ internal fun RegisterScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(Modifier.height(16.dp))
-            AuthHeader(large = false, title = stringResource(R.string.auth_register_title))
+            AuthHeader(large = false, title = stringResource(Res.string.auth_register_title))
             Spacer(Modifier.height(12.dp))
 
             OutlinedTextField(
@@ -101,13 +101,13 @@ internal fun RegisterScreen(
                 onValueChange = { onIntent(RegisterIntent.NameChanged(it)) },
                 enabled = !state.isLoading,
                 isError = nameError != null,
-                label = { Text(stringResource(R.string.auth_name_label)) },
+                label = { Text(stringResource(Res.string.auth_name_label)) },
                 supportingText = {
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                         Text(nameError.orEmpty())
                         Text(
                             stringResource(
-                                R.string.auth_name_counter,
+                                Res.string.auth_name_counter,
                                 state.displayName.length,
                                 RegisterState.NAME_MAX_LENGTH
                             )
@@ -129,8 +129,8 @@ internal fun RegisterScreen(
                 onValueChange = { onIntent(RegisterIntent.EmailChanged(it)) },
                 enabled = !state.isLoading,
                 isError = emailError != null,
-                label = { Text(stringResource(R.string.auth_email_label)) },
-                placeholder = { Text(stringResource(R.string.auth_email_placeholder)) },
+                label = { Text(stringResource(Res.string.auth_email_label)) },
+                placeholder = { Text(stringResource(Res.string.auth_email_placeholder)) },
                 supportingText = emailError?.let { { Text(it) } },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
@@ -146,7 +146,7 @@ internal fun RegisterScreen(
                 onDone = { onIntent(RegisterIntent.Submit) },
                 enabled = !state.isLoading,
                 isError = passwordError != null,
-                supportingText = passwordError ?: stringResource(R.string.auth_password_hint),
+                supportingText = passwordError ?: stringResource(Res.string.auth_password_hint),
             )
             Spacer(Modifier.height(16.dp))
 
@@ -163,15 +163,15 @@ internal fun RegisterScreen(
                 if (state.isLoading) {
                     CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
                     Spacer(Modifier.size(8.dp))
-                    Text(stringResource(R.string.auth_register_loading))
+                    Text(stringResource(Res.string.auth_register_loading))
                 } else {
-                    Text(stringResource(R.string.auth_register_button))
+                    Text(stringResource(Res.string.auth_register_button))
                 }
             }
             Spacer(Modifier.height(12.dp))
             TextButton(onClick = onLoginClick, enabled = !state.isLoading) {
                 Text(
-                    "${stringResource(R.string.auth_have_account)} ${stringResource(R.string.auth_login_button)}"
+                    "${stringResource(Res.string.auth_have_account)} ${stringResource(Res.string.auth_login_button)}"
                 )
             }
             Spacer(Modifier.height(16.dp))

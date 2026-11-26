@@ -9,22 +9,22 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.AfterTest
+import kotlin.test.assertEquals
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class LoginViewModelTest {
     private val repository = FakeAuthRepository()
     private val viewModel by lazy { LoginViewModel(repository) }
 
-    @Before
+    @BeforeTest
     fun setUp() {
         Dispatchers.setMain(StandardTestDispatcher())
     }
 
-    @After
+    @AfterTest
     fun tearDown() {
         Dispatchers.resetMain()
     }
