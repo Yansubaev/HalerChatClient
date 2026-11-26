@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -35,16 +34,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:designsystem"))
-    implementation(project(":core:data"))
-
-    implementation(project(":feature:auth"))
-    implementation(project(":feature:rooms"))
-
-    implementation(libs.androidx.navigation3.runtime)
-    implementation(libs.androidx.navigation3.ui)
-    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
-    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(project(":composeApp"))
 
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.android)

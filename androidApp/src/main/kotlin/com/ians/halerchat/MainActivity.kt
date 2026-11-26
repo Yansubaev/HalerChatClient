@@ -6,7 +6,6 @@ import android.view.ViewTreeObserver
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.ians.halerchat.core.designsystem.theme.HalerChatTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
@@ -16,9 +15,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            HalerChatTheme {
-                HalerChatApp(viewModel)
-            }
+            HalerChatApp(viewModel)
         }
         keepSplashUntilSessionIsRead()
     }
