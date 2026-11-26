@@ -14,10 +14,10 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
-import org.junit.Assert.fail
-import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNull
+import kotlin.test.fail
+import kotlin.test.Test
 
 class HttpClientAuthTest {
     private val json = headersOf(HttpHeaders.ContentType, "application/json")

@@ -10,9 +10,9 @@ import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.fail
-import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.fail
+import kotlin.test.Test
 
 
 class AuthApiTest {

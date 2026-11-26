@@ -5,7 +5,6 @@ import com.ians.halerchat.core.network.auth.TokenStorage
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.HttpClientEngine
-import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.plugins.auth.Auth
@@ -16,12 +15,14 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
+internal expect fun defaultEngine(): HttpClientEngine
+
 fun createHttpClient(
     storage: TokenStorage,
-    engine: HttpClientEngine = OkHttp.create()
+    engine: HttpClientEngine = defaultEngine()
 ) = HttpClient(engine) {
     expectSuccess = true
-    defaultRequest { url(BuildConfig.BASE_URL) }
+    defaultRequest { url(BASE_URL) }
     install(ContentNegotiation) {
         json(Json { ignoreUnknownKeys = true })
     }
